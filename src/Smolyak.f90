@@ -17,7 +17,7 @@ module Smolyak
 
 contains
 
-  !> Enumerate over all tensor product grids of orders sum(o_i) <= nLevel in nDims
+  !> Enumerate over all tensor product grids of orders sum(o_i) <= nLevel in nDim variables
   subroutine enumerateGrids(nLevel, nDim)
 
     !> Level of sparse grid
@@ -81,6 +81,11 @@ contains
     !> Resulting point in space
     real(dp), allocatable :: x(:)
 
+    !> File unit to write to
+    integer :: fUnit
+
+    open(newunit=fUnit, file='grid.dat', status='UNKNOWN', position='REWIND')
+
     nDim = size(orders)
 
     allocate(counter(nDim))
@@ -90,7 +95,7 @@ contains
     outer_loop : do
 
       call gridPoint(x,counter,orders)
-      write(45,*)x
+      write(fUnit,*)x
 
       iDim = 1
       ! Calculate the next indices:
@@ -110,6 +115,8 @@ contains
 
       end do inner_loop
     end do outer_loop
+
+    close(fUnit)
 
   end subroutine evaluateGrid
 
