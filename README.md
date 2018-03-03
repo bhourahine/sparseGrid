@@ -1,2 +1,2 @@
 # sparseGrid
-Some routines for sparse grids
+Some routines for Smolyak-type sparse grids
